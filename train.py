@@ -32,8 +32,8 @@ class trainer:
         self.optimizer = self.build_optimizer(self.model.parameters(), args.optimizer_options)
         print("Built the optimizer...")
         # build DataLoaders
-        self.train_loader = data.wsj0_2mix_dataloader(args.model_name, args.feature_options, 'tr', args.cuda_option, self.device)
-        self.valid_loader = data.wsj0_2mix_dataloader(args.model_name, args.feature_options, 'cv', args.cuda_option, self.device)
+        self.train_loader = data.dns_dataloader(args.model_name, args.feature_options, 'tr', args.cuda_option, self.device)
+        self.valid_loader = data.dns_dataloader(args.model_name, args.feature_options, 'cv', args.cuda_option, self.device)
 
         # training options
         self.num_epoch = args.num_epoch
@@ -160,7 +160,7 @@ class trainer:
 
 def main():
     parser = argparse.ArgumentParser(description='Parse the config path')
-    parser.add_argument("-c", "--config", dest="path", default='./configs/speakerbeam_timitdb_config.json',
+    parser.add_argument("-c", "--config", dest="path", default='./configs/train.json',
                         help='The path to the config file. e.g. python train.py --config configs/dc_config.json')
 
     config = parser.parse_args()
