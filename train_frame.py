@@ -39,8 +39,8 @@ class trainer:
         self.optimizer = self.build_optimizer(self.model.parameters(), args.optimizer_options)
         print("Built the optimizer...")
         # build DataLoader
-        self.train_loader = data.wsj0_2mix_dataloader(args.model_name, args.feature_options, 'tr', args.cuda_option, self.device)
-        self.valid_loader = data.wsj0_2mix_dataloader(args.model_name, args.feature_options, 'cv', args.cuda_option, self.device)
+        self.train_loader = data.dns_dataloader(args.model_name, args.feature_options, 'tr', args.cuda_option, self.device)
+        self.valid_loader = data.dns_2mix_dataloader(args.model_name, args.feature_options, 'cv', args.cuda_option, self.device)
         
 
         # training options
@@ -54,8 +54,7 @@ class trainer:
             os.makedirs(self.output_path)
 
     def init_model(self, model_name, model_options):
-        model = nn.DCCRN_mimo(rnn_units=256, masking_mode='E', use_clstm=True, kernel_num=[32, 64, 128, 256, 256, 256])
-        model = torch.load('/home/dail/Workspace/DCCRN_mimo/output/DCCRN_mimo_16000/model.epoch1')
+        model = nn.DCCRN(rnn_units=256, masking_mode='E', use_clstm=True, kernel_num=[32, 64, 128, 256, 256, 256])
         model.to(self.device)
         return model
 
@@ -101,7 +100,7 @@ class trainer:
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1)
 
             tmp_input = signal_framing(input[0], self.frame, self.shift)
-            tmp_input = tmp_input.reshape(4, -1, tmp_input.shape[-1])
+            tmp_input = tmp_input.reshape(1, -1, tmp_input.shape[-1])
             input = [tmp_input]
             del tmp_input
             zero = torch.zeros(1, input[0].shape[0]*input[0].shape[1], 128, device=input[0].device).float()
@@ -168,7 +167,7 @@ class trainer:
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1)
 
                 tmp_input = signal_framing(input[0], self.frame, self.shift)
-                tmp_input = tmp_input.reshape(4, -1, tmp_input.shape[-1])
+                tmp_input = tmp_input.reshape(1, -1, tmp_input.shape[-1])
 
                 input = [tmp_input]
                 del tmp_input
@@ -217,8 +216,8 @@ class trainer:
 
 def main():
     parser = argparse.ArgumentParser(description='Parse the config path')
-    parser.add_argument("-c", "--config", dest="path", default="/home/dail/Workspace/DCCRN_mimo/configs/train.json",
-                        help='The path to the config file. e.g. python train_frame.py --config configs/speakerbeam_timitdb_config.json')
+    parser.add_argument("-c", "--config", dest="path", default="./configs/train.json",
+                        help='The path to the config file. e.g. python train_frame.py --config configs/db_config.json')
 
 
     config = parser.parse_args()
@@ -230,6 +229,6 @@ def main():
 
 
 if __name__ == "__main__":
-    writer = SummaryWriter("./tensorboard/speakerbeam")
+    writer = SummaryWriter("./tensorboard/dccrn")
     main()
     writer.close()
