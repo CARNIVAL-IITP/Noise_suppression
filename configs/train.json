@@ -1,0 +1,31 @@
+{
+  "model_name": "DCCRN_mimo",
+  "dataset": "DNS2020_4",
+  "feature_options": {
+    "data_path": "/media/dail/HDD2/DB/DNS2020_4/",
+    "batch_size": 1,
+    "channel": 4,
+    "frame_length": 80000,
+    "sampling_rate": 16000,
+    "window_size": 512,
+    "hop_size": 256,
+    "db_threshold": 40
+  },
+  "optimizer_options": {
+    "name": "adam",
+    "lr": 0.0001
+  },
+  "model_options": {
+    "input_dim": 257,
+    "hidden_dim": 512,
+    "aux_dim": 200,
+    "num_layers": 1,
+    "dropout": 0,
+    "num_speaker": 2
+  },
+  "loss_option": "permute_SI_SNR",
+  "num_speaker": 1,
+  "num_epoch": 200,
+  "output_path": "./output/",
+  "cuda_option": "True"
+}
