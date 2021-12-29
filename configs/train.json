@@ -1,8 +1,8 @@
 {
-  "model_name": "DCCRN_mimo",
-  "dataset": "DNS2020_4",
+  "model_name": "DCCRN",
+  "dataset": "DNS2020",
   "feature_options": {
-    "data_path": "/media/dail/HDD2/DB/DNS2020_4/",
+    "data_path": "./DNS2020/",
     "batch_size": 1,
     "channel": 4,
     "frame_length": 80000,
