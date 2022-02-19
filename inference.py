@@ -3,7 +3,7 @@ from losses.loss_util import get_lossfns
 from utils import AverageMeter
 import argparse, data, json, nn, numpy as np, os, time, torch
 import glob, librosa
-from data.feature_utils import get_istft
+# from data.feature_utils import get_istft
 import matplotlib.pyplot as plt
 # from torch.utils.tensorboard import SummaryWriter
 import soundfile as sf
@@ -23,7 +23,7 @@ class trainer:
         self.model_name = args.model_name
         self.loss_name = args.loss_option
         self.dataset = args.dataset
-        self.model_num = 29
+        
         if args.cuda_option == "True":
             print("GPU mode on...")
             available_device = get_free_gpu()
@@ -68,7 +68,7 @@ class trainer:
         self.early_stop_count = 0
 
     def init_model(self, model_name, model_options):
-        model = torch.load('/home/dail/Workspace/DCCRN/output/DCCRN_mimo_DNS2020_4_snr_WPE_2/model.epoch70')
+        model = torch.load('./output/DCCRN_mimo_DNS2020_4_snr_WPE_50')
         model.to(self.device)
         return model
 
@@ -119,7 +119,7 @@ class trainer:
                 #     s_list = [label[n] for n in p]
                 #     result = sum([pesq(_s, s) for _s, s in zip(audio_out[0], s_list)]) / length
                 #     results.append(result)
-                result = sum([pesq(s, t) for s, t in zip(audio_out[0], label)])/length
+                result = sum([pesq(s, t) for s, t in zip(label, audio_out[0])])/length
                 # pesqs.append(max(results))
                 pesqs.append(result)
 
@@ -138,7 +138,7 @@ class trainer:
 
 def main():
     parser = argparse.ArgumentParser(description='Parse the config path')
-    parser.add_argument("-c", "--config", dest="path",default='./configs/speakerbeam_timitdb_inference_config.json',
+    parser.add_argument("-c", "--config", dest="path",default='./configs/inference.json',
                         help='The path to the config file. e.g. python train.py --config configs/dc_config.json')
 
     config = parser.parse_args()
