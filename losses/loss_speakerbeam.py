@@ -58,19 +58,24 @@ def snr(x, s, remove_dc=False):
 
     return 20 * torch.log10((vec_l2norm(t)+1e-8) / (vec_l2norm(n)+1e-8))
 
-def loss_speakerbeam_psa(output, label, est_phase, spec_label):
-
+def loss_speakerbeam_psa(input, output, label, est_phase, spec_label):
+    mixture = input[0]
     pred_y = output
     true_y = label[0]
+    in_snr = torch.mean(snr(mixture, true_y))
     loss_snr = torch.mean(snr(pred_y, true_y))
+    snri = loss_snr - in_snr
 
     real = spec_label[..., :257, :]
     imag = spec_label[..., 257:,:]
     spec_mag = (real**2+imag**2)**0.5
     real = real/(spec_mag + 1e-8)
     imag = imag/(spec_mag + 1e-8)
+
     spec_phase = torch.atan2(imag, real)
+
     PE = torch.zeros_like(est_phase)
+
     for i in range(output.shape[1]):
         phase_d = torch.zeros_like(est_phase)
         for j in range(i+1, output.shape[1], 1):
@@ -78,10 +83,10 @@ def loss_speakerbeam_psa(output, label, est_phase, spec_label):
         PE = PE + (spec_mag[:,i,:,:] * phase_d)
     WPE = torch.mean(PE)
 
-    loss = -loss_snr + 50*WPE
+    loss = -loss_snr + 200*WPE
 
     if torch.isnan(loss):
         print('The losses have nan values')
         exit()
-    return loss, -loss_snr, WPE
+    return loss, -loss_snr, WPE, snri
 
