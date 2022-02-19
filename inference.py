@@ -60,7 +60,7 @@ class trainer:
         # training options
         self.num_epoch = args.num_epoch
 
-        self.output_path = args.output_path+'{}100/'.format(self.model_name)
+        self.output_path = args.output_path+'{}50/'.format(self.model_name)
         if not os.path.exists(self.output_path):
             os.makedirs(self.output_path)
 
@@ -68,7 +68,7 @@ class trainer:
         self.early_stop_count = 0
 
     def init_model(self, model_name, model_options):
-        model = torch.load('/home/dail/Workspace/DCCRN/output/DCCRN_mimo_DNS2020_4_snr_WPE_2/model.epoch70')
+        model = torch.load('/home/dail/Workspace/DCCRN/output/DCCRN_mimo_DNS2020_4_snr_WPE_50/model.epoch70')
         model.to(self.device)
         return model
 
@@ -100,6 +100,7 @@ class trainer:
         len_d = len(self.test_loader)
         end = time.time()
         pesqs = []
+        snris = []
         with torch.no_grad():
             for i, data in enumerate(self.test_loader):
                 begin = time.time()
@@ -107,30 +108,29 @@ class trainer:
                 input = [ele.to(self.device) for ele in input]
                 label = [ele.to(self.device) for ele in label]
 
-                out_spec,  out_wavs, specs_t = self.model(input, label)
-                out_wavs = out_wavs.squeeze(dim=1)
+                est_phase, out_wav, specs_t = self.model(input, label)
+                loss, loss_snr, WPE, snri = self.loss_fn(input, out_wav, label, est_phase, specs_t)
+
+                out_wavs = out_wav.squeeze(dim=1)
                 audio_out = out_wavs.cpu().detach().numpy()
                 label = label[0][0].cpu().detach().numpy()
                 if label.shape[-1] > audio_out.shape[-1]:
                     label = label[:,:audio_out.shape[-1]]
                 length = label.shape[0]
-                results = []
-                # for p in permutations(range(length)):
-                #     s_list = [label[n] for n in p]
-                #     result = sum([pesq(_s, s) for _s, s in zip(audio_out[0], s_list)]) / length
-                #     results.append(result)
-                result = sum([pesq(s, t) for s, t in zip(audio_out[0], label)])/length
-                # pesqs.append(max(results))
+
+                result = sum([pesq(s, t) for s, t in zip(label, audio_out[0])])/length
                 pesqs.append(result)
+                snris.append(snri)
 
                 fn = self.output_path + os.path.split(self.file_list[i])[-1]
                 audio_out = audio_out.squeeze().T
-                sf.write(fn.replace('.wav', '_{}.wav'.format(result)), audio_out, self.feature_options.sampling_rate, subtype='PCM_16')
+                # sf.write(fn.replace('.wav', '_{}.wav'.format(result)), audio_out, self.feature_options.sampling_rate, subtype='PCM_16')
                 times.update(time.time() - end)
                 end = time.time()
                 print('%d/%d, pesq: {}, time estimated: %.2f seconds' .format(result) % (i + 1, len_d, times.avg * len_d), end='\r')
         print("\n")
         print('total average of PESQ: ', sum(pesqs) / len(pesqs))
+        print('SNRi: ', sum(snris)/len(snris))
 
     def evaluate(self):
         pass
