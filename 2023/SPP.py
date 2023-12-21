@@ -30,6 +30,7 @@ def noisePowMat(noisy, fs):
     alphaPH1mean = 0.9
     alphaPSD = 0.8
 
+
     #constants for a posteriori SPP
     q          = 0.5 # a priori probability of speech presence:
     priorFact  = q/(1-q)
