@@ -25,6 +25,7 @@ class cPReLU(nn.Module):
         imag = self.i_prelu(imag)
         return torch.cat([real,imag],self.complex_axis)
 
+
 class NavieComplexLSTM(nn.Module):
     def __init__(self, input_size, hidden_size, projection_dim=None, bidirectional=False, batch_first=False):
         super(NavieComplexLSTM, self).__init__()
