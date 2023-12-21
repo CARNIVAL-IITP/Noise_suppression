@@ -19,9 +19,6 @@ echo $exp
 
 device=0
 echo "device: $device"
-#rm -rf /home/spteam/dail/samsung/verification/*copy/
-# CUDA_VISIBLE_DEVICES=0 
-# python train_sed.py
-# python test_sed.py
+
 python train.py 
 python inference.py 

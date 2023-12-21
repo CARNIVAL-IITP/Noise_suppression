@@ -55,4 +55,4 @@
 	"student_model": "./student_model",
 	"cuda_option": "True",
 	"earlystop": 30
-}
+} 

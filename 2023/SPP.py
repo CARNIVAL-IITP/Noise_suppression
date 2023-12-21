@@ -40,9 +40,7 @@ def noisePowMat(noisy, fs):
 
     for indFr in range(1, nFrames):
         
-        # noisy_frame   = anWin*noisy[(indFr-1)*fShift+1:(indFr-1)*fShift+frLen]
-        # noisyDftFrame = np.fft(noisy_frame,frLen)
-        # noisyDftFrame = noisyDftFrame[1:frLen/2+1]
+       
         noisyDftFrame =noisy[:, indFr]
        
         

@@ -13,8 +13,7 @@ def write_wav(fname, samps, fs=16000, normalize=True):
     """
     if normalize:
         samps = samps * MAX_INT16
-    # scipy.io.wavfile.write could write single/multi-channel files
-    # for multi-channel, accept ndarray [Nsamples, Nchannels]
+   
     if samps.ndim != 1 and samps.shape[0] < samps.shape[1]:
         samps = np.transpose(samps)
         samps = np.squeeze(samps)

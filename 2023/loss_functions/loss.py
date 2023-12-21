@@ -32,6 +32,7 @@ def si_snr(x, s, remove_dc=True):
         n = x - t
     return 20 * torch.log10(vec_l2norm(t) / vec_l2norm(n))
 
+
 def snr(x, s, remove_dc=False):
     """
     Compute SI-SNR

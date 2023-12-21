@@ -14,7 +14,6 @@ class M:
         if np.where(self.d == d)[0]:
             self.get_m = float(self.m[np.where(self.d == d)[0]])
         else:
-            # intrapolation
             intra_index_1 = intra_index_2 = None
             for i in range(len(self.d)):
                 if d < self.d[i]:

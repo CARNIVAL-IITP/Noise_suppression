@@ -238,7 +238,7 @@ class trainer:
                     out_wav, est_phase, specs_t = self.model(input, label, noise, noise_est, teacher=True)
                     loss, loss_snr, WPE, snri = self.loss_fn(input,  out_wav, label, est_phase, specs_t) 
                     
-                else:  #student
+                else:  
                     out_wav, est_phase, specs_t = self.model(input, label, noise, noise_est)
                     loss, loss_snr, WPE, snri = self.loss_fn(input,  out_wav, label, est_phase, specs_t) 
 
