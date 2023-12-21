@@ -4,6 +4,7 @@ import glob
 
 scores = glob.glob('./MOS/*.txt')
 
+
 print(f'total {len(scores)} participants.')
 score={}
 for s in scores:
