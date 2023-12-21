@@ -8,6 +8,7 @@ from torch.autograd import Variable
 
 use_cuda = torch.cuda.is_available()
 
+
 class LSTM(nn.Module):
     def __init__(self,
                  input_size,
