@@ -263,8 +263,7 @@ class trainer:
 
                 for a in [out_wav, est_phase, specs_t, label, input, noise, loss, WPE, loss_snr]:
                     del a
-                                
-                
+                                      
             print("\n")
             
         self.final_loss = losses.avg
