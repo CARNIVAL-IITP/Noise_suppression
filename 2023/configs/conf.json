@@ -1,0 +1,58 @@
+{
+	"model_name": "",
+	"dataset": "dns",
+	"wandb": 0,
+	"teacher": 0,
+	"kd": 1,
+	"resum": 0,
+	"resum_path": "",
+	"feature_options": {
+		"unmixed_path": "/home/user/share/dataset/DNS2020/",
+		"data_path": "/home/user/share/national/iitp3/mimo_dccrn_8ch/iitp_8ch/",
+		"test_data_path": "/home/user/share/national/iitp3/mimo_dccrn_8ch/iitp_8ch/",
+		"rir_path": "/home/user/share/national/rir_iitp3/",
+		"batch_size": 8,
+		"batch_size_val": 16,
+		"batch_size_tt": 1,
+		"frame_length": 64000,
+		"sampling_rate": 16000,
+		"window_size": 256,
+		"hop_size": 128,
+		"db_threshold": 40,
+		"num_workers": 16,
+		"data_per_epoch": 2500,
+		"snr_range": [
+			0,
+			20
+		],
+		"normalize_range": [
+			0.01,
+			1.0
+		],
+		"channel": [
+			8
+		]
+	},
+	"optimizer_options": {
+		"name": "adamW",
+		"lr": 0.001
+	},
+	"model_options": {
+		"input_dim": 257,
+		"hidden_dim": 512,
+		"aux_dim": 200,
+		"num_layers": 1,
+		"dropout": 0,
+		"num_speaker": 1
+	},
+	"loss_option": "loss",
+	"num_speaker": 1,
+	"num_epoch": 300,
+	"output_path": "../results/",
+	"inference_path": "../results/inference/",
+	"inference_model": "/home/user/share/national/IITP/3th/src/best",
+	"teacher_model": "./teacher_model",
+	"student_model": "./student_model",
+	"cuda_option": "True",
+	"earlystop": 30
+}
