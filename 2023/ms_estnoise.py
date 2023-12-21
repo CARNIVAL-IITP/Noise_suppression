@@ -3,9 +3,6 @@ import numpy as np
 from scipy import fftpack, signal, stats
 
 
-
-
-
 class M:
     def __init__(self, d):
         self.d = np.array([1, 2, 5, 8, 10, 15, 20, 30, 40, 60, 80, 120, 140, 160])
