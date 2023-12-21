@@ -43,6 +43,7 @@ def snr(x, s, remove_dc=False):
     def vec_l2norm(x):
         return torch.norm(x, 2, dim=-1)
 
+
     # zero mean, seems do not hurt results
     if remove_dc:
         x_zm = x - torch.mean(x)

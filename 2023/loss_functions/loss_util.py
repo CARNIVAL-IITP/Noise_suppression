@@ -12,3 +12,4 @@ def get_lossfns():
     loss_fns = AttrDict()
     loss_fns["loss"] = Loss
     return loss_fns
+

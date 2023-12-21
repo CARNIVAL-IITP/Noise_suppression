@@ -14,6 +14,8 @@ def write_wav(fname, samps, fs=16000, normalize=True):
     if normalize:
         samps = samps * MAX_INT16
    
+
+   
     if samps.ndim != 1 and samps.shape[0] < samps.shape[1]:
         samps = np.transpose(samps)
         samps = np.squeeze(samps)
