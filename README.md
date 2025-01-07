@@ -1,9 +1,10 @@
 # Speech_enhancement
-본 코드는 2021년도 과학기술통신부의 재원으로 정보통신기획평가원(IITP)의 지원을 받아 수행한 "원격 다자간 영상화의에서의 음성 품질 고도화 기술개발" 과제의 일환으로 공개된 잡음제거의 1차년도 (2021), 2차년도 (2022) 코드입니다.
-- 1차년도 모델의 경우 Microsoft에서 개최한 DNS-Shallenge의 DB로 훈련하였으며 총 10,000 set의 training set과 5,000 set의 validation set을 사용했습니다.
+본 코드는 2021년도부터 과학기술통신부의 재원으로 정보통신기획평가원(IITP)의 지원을 받아 수행한 "원격 다자간 영상화의에서의 음성 품질 고도화 기술개발" 과제의 일환으로 공개된 잡음제거의 1차년도 (2021), 2차년도 (2022), 3차년도 (2023), 4차년도 (2024) 코드입니다.
+- 1차년도 모델의 경우 Microsoft에서 개최한 DNS-Shallenge의 DB로 훈련하였으며 총 10,000 set의 training set과 5,000 set의 validation set을 그리고 150 set의 test set을 사용했습니다.
 - 2차년도 모델의 경우 Sitec 한국어 음성 DB를 사용하여 진행되었습니다.
-
-DCCRN 모델을 기반으로 다채널 모델로 확장 및 minimum statistics algorithm을 이용하여 성능을 개선하는 연구개발을 진행했습니다.
+- 3차년도와 4차년도 모델의 경우 Microsoft에서 개최한 DNS-Shallenge의 DB로 훈련하였으며 총 10,000 set의 training set과 5,000 set의 validation set 그리고 150 set의 test set을 사용했습니다.
+  
+DCCRN 모델을 기반으로 다채널 모델로 확장 및 minimum statistics algorithm을 이용하여 성능을 개선하고, 공간적 정보를 보존하기 위해 lPD loss를 적용하는 연구개발을 진행했습니다.
 
 # Requirement
 audioread               2.1.9                              
