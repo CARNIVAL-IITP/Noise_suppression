@@ -3,7 +3,7 @@
 - 1차년도 모델의 경우 Microsoft에서 개최한 DNS-Shallenge의 DB로 훈련하였으며 총 10,000 set의 training set과 5,000 set의 validation set을 사용했습니다.
 - 2차년도 모델의 경우 Sitec 한국어 음성 DB를 사용하여 진행되었습니다.
 
-DCCRN 모델을 기반으로 다채널 모델로 확장 및 minimum statistics algorithm을 이용하여 성능을 개선하는 연구개발을 진행했습니다.1
+DCCRN 모델을 기반으로 다채널 모델로 확장 및 minimum statistics algorithm을 이용하여 성능을 개선하는 연구개발을 진행했습니다.
 
 # Requirement
 audioread               2.1.9                              
